@@ -88,6 +88,23 @@ class ProductRepository extends \Magento\Catalog\Model\ProductRepository
         \Magento\Framework\Serialize\Serializer\Json $serializer = null,
         $cacheLimit = 1000
     ) {
+        $this->productFactory = $productFactory;
+        $this->collectionFactory = $collectionFactory;
+        $this->initializationHelper = $initializationHelper;
+        $this->searchResultsFactory = $searchResultsFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->resourceModel = $resourceModel;
+        $this->linkInitializer = $linkInitializer;
+        $this->linkTypeProvider = $linkTypeProvider;
+        $this->storeManager = $storeManager;
+        $this->attributeRepository = $attributeRepository;
+        $this->filterBuilder = $filterBuilder;
+        $this->metadataService = $metadataServiceInterface;
+        $this->extensibleDataObjectConverter = $extensibleDataObjectConverter;
+        $this->fileSystem = $fileSystem;
+        $this->contentFactory = $contentFactory;
+        $this->imageProcessor = $imageProcessor;
+        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
         $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()
             ->get(\Magento\Framework\Serialize\Serializer\Json::class);
@@ -250,5 +267,25 @@ class ProductRepository extends \Magento\Catalog\Model\ProductRepository
             );
         }
         return $this->collectionProcessor;
+    }
+
+    /**
+     * Get key for cache
+     *
+     * @param array $data
+     * @return string
+     */
+    protected function getCacheKey($data)
+    {
+        $serializeData = [];
+        foreach ($data as $key => $value) {
+            if (is_object($value)) {
+                $serializeData[$key] = $value->getId();
+            } else {
+                $serializeData[$key] = $value;
+            }
+        }
+        $serializeData = $this->serializer->serialize($serializeData);
+        return sha1($serializeData);
     }
 }
