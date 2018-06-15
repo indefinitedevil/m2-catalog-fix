@@ -109,6 +109,30 @@ class ProductRepository extends \Magento\Catalog\Model\ProductRepository
         $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()
             ->get(\Magento\Framework\Serialize\Serializer\Json::class);
         $this->cacheLimit = (int)$cacheLimit;
+        parent::__construct(
+            $productFactory,
+            $initializationHelper,
+            $searchResultsFactory,
+            $collectionFactory,
+            $searchCriteriaBuilder,
+            $attributeRepository,
+            $resourceModel,
+            $linkInitializer,
+            $linkTypeProvider,
+            $storeManager,
+            $filterBuilder,
+            $metadataServiceInterface,
+            $extensibleDataObjectConverter,
+            $optionConverter,
+            $fileSystem,
+            $contentValidator,
+            $contentFactory,
+            $mimeTypeExtensionMap,
+            $imageProcessor,
+            $extensionAttributesJoinProcessor,
+            $collectionProcessor,
+            $serializer
+        );
     }
     /**
      * {@inheritdoc}
