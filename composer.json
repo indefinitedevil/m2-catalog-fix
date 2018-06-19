@@ -2,7 +2,7 @@
     "name": "digitalsix/module-catalog-fix",
     "description": "",
     "type": "magento2-module",
-    "version": "1.0.1",
+    "version": "1.0.1.1",
     "require": {
         "php": "~5.5.0|~5.6.0|>=7.0.0",
         "magento/module-catalog": ">=100.0.0"
